@@ -1,17 +1,46 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(title="Q-One Trader API", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # production-এ নির্দিষ্ট frontend domain দিন
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
-def home():
+def root():
     return {
         "status": "online",
-        "message": "Q-One Trader backend is running"
+        "service": "Q-One Trader Backend"
     }
 
-@app.get("/status")
-def status():
+
+@app.get("/health")
+def health():
     return {
-        "connected": True,
-        "mode": "demo"
+        "status": "healthy"
+    }
+
+
+@app.get("/api/pairs")
+def pairs():
+    return {
+        "pairs": [
+            "EURUSD",
+            "GBPUSD",
+            "USDJPY",
+            "AUDUSD"
+        ]
+    }
+
+
+@app.get("/api/market/status")
+def market_status():
+    return {
+        "status": "available"
     }
