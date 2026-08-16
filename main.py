@@ -44,3 +44,21 @@ def market_status():
     return {
         "status": "available"
     }
+from pydantic import BaseModel
+
+class AnalyzeRequest(BaseModel):
+    pair: str
+    timeframe: str = "1m"
+    expiry: int = 60
+
+
+@app.post("/api/analyze")
+def analyze(request: AnalyzeRequest):
+    return {
+        "pair": request.pair,
+        "timeframe": request.timeframe,
+        "signal": "NEUTRAL",
+        "confidence": 0,
+        "expiry_seconds": request.expiry,
+        "message": "Real market-data analysis is not connected yet."
+    }
