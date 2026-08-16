@@ -1,2 +1,6 @@
+
 fastapi
 uvicorn
+pydantic
+python-dotenv
+git+https://github.com/cleitonleonel/pyquotex.git
